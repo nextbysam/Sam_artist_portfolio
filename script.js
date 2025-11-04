@@ -288,7 +288,7 @@ function init() {
     window.scrollTo(0, 0);
     
     updateAge();
-    setInterval(updateAge, 60000);
+    setInterval(updateAge, 100); // Update every 100ms for live precision
     
     initSectionToggles();
     initScrollEmphasis();
