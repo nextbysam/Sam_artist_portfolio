@@ -209,13 +209,15 @@ function injectGlitchAnimation() {
     document.head.appendChild(style);
 }
 
-// Cursor Image Trail Effect
+// Cursor Image Trail Effect - Improved with Element Pooling
 let lastSpawnTime = 0;
-const SPAWN_INTERVAL = 80; // milliseconds between spawns
-const FADE_DURATION = 2500; // how long fade takes
-const IMAGE_SIZE = 80; // size in pixels
+let mousePos = { x: 0, y: 0, lastX: 0, lastY: 0 };
+const SPAWN_INTERVAL = 70;
+const IMAGE_SIZE = 80;
+const MAX_POOL_SIZE = 50;
+const imagePool = [];
+const activeImages = new Set();
 
-// Add your image paths here (can be single or multiple for random selection)
 const TRAIL_IMAGES = [
     'images/05A58CEC-CF53-4070-AEFB-D157DEF9510A_1_105_c.jpeg',
     'images/06A18401-2AF6-4711-A781-F7614C7FA776_1_105_c.jpeg',
@@ -239,48 +241,92 @@ const TRAIL_IMAGES = [
     'images/F9ABCE9D-3310-42DE-91E7-2762744D49F0_1_105_c.jpeg'
 ];
 
-function initCursorImageTrail() {
-    document.addEventListener('mousemove', (e) => {
-        const now = Date.now();
+function getPooledElement() {
+    if (imagePool.length > 0) {
+        return imagePool.pop();
+    }
+    const div = document.createElement('div');
+    div.className = 'cursor-trail-image';
+    return div;
+}
 
-        // Throttle spawning
-        if (now - lastSpawnTime < SPAWN_INTERVAL) {
-            return;
-        }
-
-        lastSpawnTime = now;
-        spawnTrailImage(e.clientX, e.clientY);
-    });
+function returnToPool(element) {
+    activeImages.delete(element);
+    if (imagePool.length < MAX_POOL_SIZE) {
+        element.style.display = 'none';
+        imagePool.push(element);
+    } else {
+        element.remove();
+    }
 }
 
 function spawnTrailImage(x, y) {
-    const img = document.createElement('div');
-    img.className = 'cursor-trail-image';
-
-    // Style the element
-    img.style.left = `${x - IMAGE_SIZE / 2}px`;
-    img.style.top = `${y - IMAGE_SIZE / 2}px`;
-    img.style.width = `${IMAGE_SIZE}px`;
-    img.style.height = `${IMAGE_SIZE}px`;
-
-    // Use actual image (randomly select if multiple images)
+    const img = getPooledElement();
+    
+    img.style.cssText = `
+        left: ${x - IMAGE_SIZE/2}px;
+        top: ${y - IMAGE_SIZE/2}px;
+        width: ${IMAGE_SIZE}px;
+        height: ${IMAGE_SIZE}px;
+        opacity: 0.9;
+        transform: scale(1) rotate(0deg);
+        display: block;
+    `;
+    
     const randomImage = TRAIL_IMAGES[Math.floor(Math.random() * TRAIL_IMAGES.length)];
     img.style.backgroundImage = `url(${randomImage})`;
     img.style.backgroundSize = 'contain';
     img.style.backgroundRepeat = 'no-repeat';
     img.style.backgroundPosition = 'center';
-
-    document.body.appendChild(img);
-
-    // Trigger fade animation
+    
+    if (!img.parentElement) {
+        document.body.appendChild(img);
+    }
+    
+    activeImages.add(img);
+    
     requestAnimationFrame(() => {
-        img.classList.add('fade');
+        const randomRotate = (Math.random() - 0.5) * 30;
+        img.style.opacity = '0';
+        img.style.transform = `scale(0.3) rotate(${randomRotate}deg)`;
     });
+    
+    setTimeout(() => returnToPool(img), 2500);
+}
 
-    // Remove from DOM after animation completes
-    setTimeout(() => {
-        img.remove();
-    }, FADE_DURATION);
+function initCursorImageTrail() {
+    // Disable on mobile/touch devices
+    if ('ontouchstart' in window) {
+        return;
+    }
+    
+    // Respect prefers-reduced-motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+    }
+    
+    document.addEventListener('mousemove', (e) => {
+        const now = Date.now();
+        const dist = Math.hypot(e.clientX - mousePos.lastX, e.clientY - mousePos.lastY);
+        
+        if (dist > 15 && now - lastSpawnTime > SPAWN_INTERVAL) {
+            spawnTrailImage(e.clientX, e.clientY);
+            mousePos.lastX = e.clientX;
+            mousePos.lastY = e.clientY;
+            lastSpawnTime = now;
+        }
+    });
+    
+    window.addEventListener('resize', () => {
+        activeImages.forEach(img => {
+            const rect = img.getBoundingClientRect();
+            if (rect.left < -200 || rect.top < -200 ||
+                rect.left > window.innerWidth + 200 ||
+                rect.top > window.innerHeight + 200) {
+                returnToPool(img);
+            }
+        });
+    });
 }
 
 // Initialize everything
