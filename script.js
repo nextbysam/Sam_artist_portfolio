@@ -213,7 +213,14 @@ function injectGlitchAnimation() {
 let lastSpawnTime = 0;
 const SPAWN_INTERVAL = 100; // milliseconds between spawns
 const FADE_DURATION = 1500; // how long fade takes
-const IMAGE_SIZE = 15; // size in pixels
+const IMAGE_SIZE = 30; // size in pixels
+
+// Add your image paths here (can be single or multiple for random selection)
+const TRAIL_IMAGES = [
+    'images/trail1.png',
+    'images/trail2.png',
+    'images/trail3.png'
+];
 
 function initCursorImageTrail() {
     document.addEventListener('mousemove', (e) => {
@@ -239,9 +246,12 @@ function spawnTrailImage(x, y) {
     img.style.width = `${IMAGE_SIZE}px`;
     img.style.height = `${IMAGE_SIZE}px`;
 
-    // Minimalist colored dot
-    img.style.backgroundColor = 'var(--accent-color)';
-    img.style.borderRadius = '50%';
+    // Use actual image (randomly select if multiple images)
+    const randomImage = TRAIL_IMAGES[Math.floor(Math.random() * TRAIL_IMAGES.length)];
+    img.style.backgroundImage = `url(${randomImage})`;
+    img.style.backgroundSize = 'contain';
+    img.style.backgroundRepeat = 'no-repeat';
+    img.style.backgroundPosition = 'center';
 
     document.body.appendChild(img);
 
