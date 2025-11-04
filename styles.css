@@ -345,6 +345,19 @@ footer {
     z-index: 1000;
 }
 
+/* Show tooltip below when it would overflow top */
+.term.tooltip-below::after {
+    bottom: auto;
+    top: calc(100% + 12px);
+}
+
+.term.tooltip-below::before {
+    bottom: auto;
+    top: calc(100% + 4px);
+    border-top-color: transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.95);
+}
+
 .term:hover::after,
 .term:hover::before {
     opacity: 1;
@@ -358,6 +371,11 @@ body.dark-mode .term::after {
 
 body.dark-mode .term::before {
     border-top-color: rgba(255, 255, 255, 0.95);
+}
+
+body.dark-mode .term.tooltip-below::before {
+    border-top-color: transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.95);
 }
 
 @media (max-width: 768px) {

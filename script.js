@@ -359,6 +359,34 @@ function initCursorImageTrail() {
     });
 }
 
+// Dynamic Tooltip Positioning
+function initTooltipPositioning() {
+    const terms = document.querySelectorAll('.term');
+    
+    terms.forEach(term => {
+        term.addEventListener('mouseenter', function() {
+            // Use a small delay to let CSS positioning happen first
+            setTimeout(() => {
+                const termRect = this.getBoundingClientRect();
+                
+                // Add class to control positioning
+                this.classList.remove('tooltip-below');
+                
+                // Check if tooltip would overflow top
+                // Rough estimate: tooltip is ~150-200px tall
+                const estimatedTooltipHeight = 200;
+                if (termRect.top < estimatedTooltipHeight) {
+                    this.classList.add('tooltip-below');
+                }
+            }, 10);
+        });
+        
+        term.addEventListener('mouseleave', function() {
+            this.classList.remove('tooltip-below');
+        });
+    });
+}
+
 // Initialize everything
 function init() {
     window.scrollTo(0, 0);
@@ -371,6 +399,7 @@ function init() {
     initFooterSecret();
     initReadingTimeReward();
     initCursorImageTrail();
+    initTooltipPositioning();
     loadThemePreference();
     injectGlitchAnimation();
     
