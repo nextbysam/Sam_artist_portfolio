@@ -4,7 +4,7 @@ function calculateAge() {
     const now = new Date();
     const ageInMs = now - birthDate;
     const ageInYears = ageInMs / (1000 * 60 * 60 * 24 * 365.25);
-    return ageInYears.toFixed(4);
+    return ageInYears.toFixed(9); // 9 decimals for millisecond precision
 }
 
 function updateAge() {
@@ -288,7 +288,7 @@ function init() {
     window.scrollTo(0, 0);
     
     updateAge();
-    setInterval(updateAge, 100); // Update every 100ms for live precision
+    setInterval(updateAge, 10); // Update every 10ms for real-time millisecond precision
     
     initSectionToggles();
     initScrollEmphasis();
