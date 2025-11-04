@@ -305,7 +305,22 @@ function initCursorImageTrail() {
         return;
     }
     
+    const header = document.querySelector('header');
+    
     document.addEventListener('mousemove', (e) => {
+        // Only spawn images if cursor is over the header (about me section)
+        if (!header) return;
+        
+        const headerRect = header.getBoundingClientRect();
+        const isOverHeader = (
+            e.clientX >= headerRect.left &&
+            e.clientX <= headerRect.right &&
+            e.clientY >= headerRect.top &&
+            e.clientY <= headerRect.bottom
+        );
+        
+        if (!isOverHeader) return;
+        
         const now = Date.now();
         const dist = Math.hypot(e.clientX - mousePos.lastX, e.clientY - mousePos.lastY);
         
