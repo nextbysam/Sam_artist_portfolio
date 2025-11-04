@@ -228,14 +228,6 @@ footer {
     display: none;
 }
 
-.key-listener {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-    width: 1px;
-    height: 1px;
-}
-
 @media (max-width: 768px) {
     .container {
         padding: 20px;
