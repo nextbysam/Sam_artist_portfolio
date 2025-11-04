@@ -162,7 +162,8 @@ const footerQuotes = [
 function initFooterSecret() {
     const footer = document.querySelector('.footer-signature');
     
-    footer.addEventListener('click', () => {
+    footer.addEventListener('click', (e) => {
+        e.preventDefault();
         footerClickCount++;
         
         if (footerClickCount >= FOOTER_CLICK_THRESHOLD) {
