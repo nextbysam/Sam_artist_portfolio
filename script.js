@@ -1,6 +1,6 @@
 // Dynamic Age Calculator
 function calculateAge() {
-    const birthDate = new Date('2009-02-10');
+    const birthDate = new Date('2009-10-02'); // October 2, 2009
     const now = new Date();
     const ageInMs = now - birthDate;
     const ageInYears = ageInMs / (1000 * 60 * 60 * 24 * 365.25);
