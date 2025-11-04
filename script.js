@@ -319,6 +319,12 @@ function initCursorImageTrail() {
         
         if (!isInHeaderVerticalRange) return;
         
+        // Disable spawning near tooltip terms (for current and future .term elements)
+        const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
+        if (hoveredElement && hoveredElement.closest('.term')) {
+            return;
+        }
+        
         const now = Date.now();
         const dist = Math.hypot(e.clientX - mousePos.lastX, e.clientY - mousePos.lastY);
         
