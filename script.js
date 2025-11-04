@@ -213,7 +213,7 @@ function injectGlitchAnimation() {
 let lastSpawnTime = 0;
 let mousePos = { x: 0, y: 0, lastX: 0, lastY: 0 };
 const SPAWN_INTERVAL = 70;
-const IMAGE_SIZE = 120;
+const IMAGE_SIZE = 180;
 const MAX_POOL_SIZE = 50;
 const imagePool = [];
 const activeImages = new Set();
@@ -306,6 +306,7 @@ function initCursorImageTrail() {
     }
     
     const header = document.querySelector('header');
+    const BUFFER_ZONE = 150; // pixels around tooltip terms to disable spawning
     
     document.addEventListener('mousemove', (e) => {
         // Only spawn images if cursor is in the vertical range of header (about me section)
@@ -319,10 +320,20 @@ function initCursorImageTrail() {
         
         if (!isInHeaderVerticalRange) return;
         
-        // Disable spawning near tooltip terms (for current and future .term elements)
-        const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
-        if (hoveredElement && hoveredElement.closest('.term')) {
-            return;
+        // Disable spawning near tooltip terms with buffer zone
+        const termElements = document.querySelectorAll('.term');
+        for (const term of termElements) {
+            const rect = term.getBoundingClientRect();
+            const isNearTerm = (
+                e.clientX >= rect.left - BUFFER_ZONE &&
+                e.clientX <= rect.right + BUFFER_ZONE &&
+                e.clientY >= rect.top - BUFFER_ZONE &&
+                e.clientY <= rect.bottom + BUFFER_ZONE
+            );
+            
+            if (isNearTerm) {
+                return; // Don't spawn images near tooltip words
+            }
         }
         
         const now = Date.now();
