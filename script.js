@@ -211,9 +211,9 @@ function injectGlitchAnimation() {
 
 // Cursor Image Trail Effect
 let lastSpawnTime = 0;
-const SPAWN_INTERVAL = 100; // milliseconds between spawns
-const FADE_DURATION = 1500; // how long fade takes
-const IMAGE_SIZE = 30; // size in pixels
+const SPAWN_INTERVAL = 80; // milliseconds between spawns
+const FADE_DURATION = 2500; // how long fade takes
+const IMAGE_SIZE = 80; // size in pixels
 
 // Add your image paths here (can be single or multiple for random selection)
 const TRAIL_IMAGES = [
