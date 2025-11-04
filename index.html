@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sam Upadhyay - Artist who solves hard problems">
+    <title>Sam Upadhyay</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>Sam Upadhyay</h1>
+            <div class="divider">—</div>
+            <p class="intro">
+                Artist who solves hard problems. <span id="age">16</span> years old.<br>
+                Obsessed with creating, not competing.
+            </p>
+            <nav class="contact-links">
+                <a href="mailto:sam@samupadhyay.com">sam@samupadhyay.com</a>
+                <span class="separator">/</span>
+                <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a>
+                <span class="separator">/</span>
+                <a href="https://twitter.com/yourusername" target="_blank" rel="noopener">Twitter</a>
+                <span class="separator">/</span>
+                <a href="https://instagram.com/yourusername" target="_blank" rel="noopener">Instagram</a>
+            </nav>
+        </header>
+
+        <div class="divider">—</div>
+
+        <section class="expandable-section" id="philosophy-section">
+            <button class="section-toggle" aria-expanded="true" aria-controls="philosophy-content">
+                <span class="arrow">[v]</span> Philosophy
+            </button>
+            <div class="section-content" id="philosophy-content">
+                <h2>My Philosophy</h2>
+                <div class="philosophy-text">
+                    <p>
+                        I believe in <span class="emphasis-word" data-concept="creating">creating</span>—not competing. <span class="emphasis-word" data-concept="competition">Competition</span> is for those who accept the status quo. Instead, I aim for the <span class="emphasis-word" data-concept="revolutionary">revolutionary</span>: solving humanity's deepest problems, not just playing the game better.
+                    </p>
+                    <p>
+                        I'm not here to compete with anyone. I'm here to create something that didn't exist before. Something that matters. An <span class="emphasis-word" data-concept="artist">artist</span> doesn't compete with other artists—they express what only they can see.
+                    </p>
+                    <p>
+                        <span class="emphasis-word" data-concept="isolation">Isolation</span> isn't loneliness; it's where <span class="emphasis-word" data-concept="focus">focus</span> becomes sacred. While everyone else is networking, I'm going deep—<span class="emphasis-word" data-concept="obsessively">obsessively</span> deep—into the problems that actually matter.
+                    </p>
+                    <p>
+                        You break rules. You experiment. You fail—and you do it again, better. Ideas come through clarity, not chaos. And clarity comes from stillness.
+                    </p>
+                    <p>
+                        I'm 16. I'm still experimenting, still learning. But I'm not waiting for permission to start. The world doesn't need another person competing for the same prizes. It needs people who see a different game entirely.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="expandable-section" id="now-section">
+            <button class="section-toggle" aria-expanded="false" aria-controls="now-content">
+                <span class="arrow">[>]</span> Now
+            </button>
+            <div class="section-content hidden" id="now-content">
+                <h2>What I'm Doing Now</h2>
+                <div class="now-entry">
+                    <time datetime="2025-11-04">November 2025</time>
+                    <p>Building this website. Exploring minimalist design. Thinking about what it means to create versus compete.</p>
+                </div>
+                <div class="now-entry">
+                    <time datetime="2025-11">Current focus</time>
+                    <p>Working on projects that solve hard problems. Going deep, not wide.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="expandable-section" id="work-section">
+            <button class="section-toggle" aria-expanded="false" aria-controls="work-content">
+                <span class="arrow">[>]</span> Work
+            </button>
+            <div class="section-content hidden" id="work-content">
+                <h2>Selected Work</h2>
+                <div class="project">
+                    <h3>Project Title</h3>
+                    <p>Description of the project and what problem it solves.</p>
+                    <p class="tech-stack">Tech: React, Node.js, Python</p>
+                    <a href="#" class="project-link">View Project →</a>
+                </div>
+                <div class="project">
+                    <h3>Another Project</h3>
+                    <p>Another interesting problem solved.</p>
+                    <p class="tech-stack">Tech: Python, TensorFlow, WebGL</p>
+                    <a href="#" class="project-link">View Project →</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider">—</div>
+
+        <footer>
+            <button class="footer-signature" aria-label="Footer signature">../.</button>
+        </footer>
+    </main>
+
+    <div id="easter-egg-message" class="easter-egg-message hidden" role="status" aria-live="polite"></div>
+    <input type="text" id="key-listener" class="key-listener" aria-hidden="true" autocomplete="off">
+
+    <script src="script.js"></script>
+</body>
+</html>
