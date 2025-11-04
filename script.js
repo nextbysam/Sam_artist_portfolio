@@ -213,7 +213,7 @@ function injectGlitchAnimation() {
 let lastSpawnTime = 0;
 let mousePos = { x: 0, y: 0, lastX: 0, lastY: 0 };
 const SPAWN_INTERVAL = 70;
-const IMAGE_SIZE = 80;
+const IMAGE_SIZE = 120;
 const MAX_POOL_SIZE = 50;
 const imagePool = [];
 const activeImages = new Set();
