@@ -211,6 +211,8 @@ function injectGlitchAnimation() {
 
 // Initialize everything
 function init() {
+    window.scrollTo(0, 0);
+    
     updateAge();
     setInterval(updateAge, 60000);
     
@@ -223,12 +225,6 @@ function init() {
     
     document.addEventListener('keydown', handleKeyPress);
     document.addEventListener('keydown', handleKonamiCode);
-    
-    const keyListener = document.getElementById('key-listener');
-    if (keyListener) {
-        keyListener.focus();
-        document.addEventListener('click', () => keyListener.focus());
-    }
 }
 
 if (document.readyState === 'loading') {
