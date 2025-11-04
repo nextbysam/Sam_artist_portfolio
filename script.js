@@ -308,18 +308,16 @@ function initCursorImageTrail() {
     const header = document.querySelector('header');
     
     document.addEventListener('mousemove', (e) => {
-        // Only spawn images if cursor is over the header (about me section)
+        // Only spawn images if cursor is in the vertical range of header (about me section)
         if (!header) return;
         
         const headerRect = header.getBoundingClientRect();
-        const isOverHeader = (
-            e.clientX >= headerRect.left &&
-            e.clientX <= headerRect.right &&
+        const isInHeaderVerticalRange = (
             e.clientY >= headerRect.top &&
             e.clientY <= headerRect.bottom
         );
         
-        if (!isOverHeader) return;
+        if (!isInHeaderVerticalRange) return;
         
         const now = Date.now();
         const dist = Math.hypot(e.clientX - mousePos.lastX, e.clientY - mousePos.lastY);
