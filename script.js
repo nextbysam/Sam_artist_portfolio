@@ -217,9 +217,22 @@ const IMAGE_SIZE = 30; // size in pixels
 
 // Add your image paths here (can be single or multiple for random selection)
 const TRAIL_IMAGES = [
-    'images/trail1.png',
-    'images/trail2.png',
-    'images/trail3.png'
+    'images/05A58CEC-CF53-4070-AEFB-D157DEF9510A_1_105_c.jpeg',
+    'images/06A18401-2AF6-4711-A781-F7614C7FA776_1_105_c.jpeg',
+    'images/0D7A0269-FBC6-4264-B26D-EAF71CD15477_1_105_c.jpeg',
+    'images/16ADCE47-8EDD-4A67-895F-233BC099CEBC_1_105_c.jpeg',
+    'images/2CA1CC52-09ED-42DB-8D19-3FF8E1062CB1_1_105_c.jpeg',
+    'images/3CD8BAE1-0320-41EF-830C-CD042D3F7001_4_5005_c.jpeg',
+    'images/7519194D-7F30-40B9-8C72-A57E82F5FAFF_1_105_c.jpeg',
+    'images/7FC1BA15-6F09-4F6F-B3C4-681B061F6FD4_1_105_c.jpeg',
+    'images/97DCE991-5453-4CA5-A3AF-71DCCC2829DD_4_5005_c.jpeg',
+    'images/9AF02E33-4816-4E51-9454-DEF34E694753_1_105_c.jpeg',
+    'images/A12B156C-B37E-40CD-9BF5-79B9B8DC62A1_1_105_c.jpeg',
+    'images/B3A460F8-F6E7-4476-83B4-10294EC0FFF7_4_5005_c.jpeg',
+    'images/B6475C10-5D3F-4549-8549-DAEA4379BB96_4_5005_c.jpeg',
+    'images/CB3DEE66-064B-4740-BCA2-BAD5A7CA8161_1_105_c.jpeg',
+    'images/D22C44C7-1262-4582-8478-7326F1F29524_1_105_c.jpeg',
+    'images/EF2F26CD-2321-4E72-AA34-65C82CCF4AC4_1_105_c.jpeg'
 ];
 
 function initCursorImageTrail() {
