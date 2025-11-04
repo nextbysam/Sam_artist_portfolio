@@ -305,20 +305,20 @@ function initCursorImageTrail() {
         return;
     }
     
-    const header = document.querySelector('header');
-    const BUFFER_ZONE = 150; // pixels around tooltip terms to disable spawning
+    const container = document.querySelector('.container');
+    const BUFFER_ZONE = IMAGE_SIZE + 80; // Image size + margin to prevent overlap with word and tooltip
     
     document.addEventListener('mousemove', (e) => {
-        // Only spawn images if cursor is in the vertical range of header (about me section)
-        if (!header) return;
+        // Only spawn images in the siderails (margins on left/right of content)
+        if (!container) return;
         
-        const headerRect = header.getBoundingClientRect();
-        const isInHeaderVerticalRange = (
-            e.clientY >= headerRect.top &&
-            e.clientY <= headerRect.bottom
+        const containerRect = container.getBoundingClientRect();
+        const isInSiderails = (
+            e.clientX < containerRect.left || 
+            e.clientX > containerRect.right
         );
         
-        if (!isInHeaderVerticalRange) return;
+        if (!isInSiderails) return;
         
         // Disable spawning near tooltip terms with buffer zone
         const termElements = document.querySelectorAll('.term');
