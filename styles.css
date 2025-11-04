@@ -228,19 +228,31 @@ footer {
     display: none;
 }
 
-/* Cursor Trail Image Animation */
+/* Cursor Trail Image Animation - Improved Performance */
 .cursor-trail-image {
     position: fixed;
     pointer-events: none;
     z-index: 9999;
     opacity: 0.9;
-    transition: opacity 2.5s ease-out, transform 2.5s ease-out;
+    /* Use transform for better performance (GPU-accelerated) */
+    transition: opacity 2.5s cubic-bezier(0.4, 0, 0.6, 1),
+                transform 2.5s cubic-bezier(0.4, 0, 0.6, 1);
     will-change: opacity, transform;
+    /* Prevent blurry images during animation */
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 .cursor-trail-image.fade {
     opacity: 0;
-    transform: scale(0.3);
+    transform: scale(0.3) rotate(10deg);
+}
+
+/* Disable on mobile */
+@media (max-width: 768px), (hover: none) {
+    .cursor-trail-image {
+        display: none !important;
+    }
 }
 
 @media (max-width: 768px) {
