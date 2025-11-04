@@ -209,6 +209,53 @@ function injectGlitchAnimation() {
     document.head.appendChild(style);
 }
 
+// Cursor Image Trail Effect
+let lastSpawnTime = 0;
+const SPAWN_INTERVAL = 100; // milliseconds between spawns
+const FADE_DURATION = 1500; // how long fade takes
+const IMAGE_SIZE = 15; // size in pixels
+
+function initCursorImageTrail() {
+    document.addEventListener('mousemove', (e) => {
+        const now = Date.now();
+
+        // Throttle spawning
+        if (now - lastSpawnTime < SPAWN_INTERVAL) {
+            return;
+        }
+
+        lastSpawnTime = now;
+        spawnTrailImage(e.clientX, e.clientY);
+    });
+}
+
+function spawnTrailImage(x, y) {
+    const img = document.createElement('div');
+    img.className = 'cursor-trail-image';
+
+    // Style the element
+    img.style.left = `${x - IMAGE_SIZE / 2}px`;
+    img.style.top = `${y - IMAGE_SIZE / 2}px`;
+    img.style.width = `${IMAGE_SIZE}px`;
+    img.style.height = `${IMAGE_SIZE}px`;
+
+    // Minimalist colored dot
+    img.style.backgroundColor = 'var(--accent-color)';
+    img.style.borderRadius = '50%';
+
+    document.body.appendChild(img);
+
+    // Trigger fade animation
+    requestAnimationFrame(() => {
+        img.classList.add('fade');
+    });
+
+    // Remove from DOM after animation completes
+    setTimeout(() => {
+        img.remove();
+    }, FADE_DURATION);
+}
+
 // Initialize everything
 function init() {
     window.scrollTo(0, 0);
@@ -220,6 +267,7 @@ function init() {
     initScrollEmphasis();
     initFooterSecret();
     initReadingTimeReward();
+    initCursorImageTrail();
     loadThemePreference();
     injectGlitchAnimation();
     

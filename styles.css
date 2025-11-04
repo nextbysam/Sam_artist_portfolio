@@ -228,6 +228,21 @@ footer {
     display: none;
 }
 
+/* Cursor Trail Image Animation */
+.cursor-trail-image {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+    will-change: opacity, transform;
+}
+
+.cursor-trail-image.fade {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 20px;
