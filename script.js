@@ -19,7 +19,8 @@ function initSectionToggles() {
     const toggleButtons = document.querySelectorAll('.section-toggle');
     
     toggleButtons.forEach(button => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
             const contentId = button.getAttribute('aria-controls');
             const content = document.getElementById(contentId);
             const arrow = button.querySelector('.arrow');
