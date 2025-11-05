@@ -228,7 +228,7 @@ footer {
     display: none;
 }
 
-/* Cursor Trail Image Animation - Improved Performance */
+/* Cursor Trail Image Animation - Optimized with Sprite Sheet */
 .cursor-trail-image {
     position: fixed;
     pointer-events: none;
@@ -241,6 +241,8 @@ footer {
     /* Prevent blurry images during animation */
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
+    /* Sprite sheet background */
+    background-repeat: no-repeat;
 }
 
 .cursor-trail-image.fade {

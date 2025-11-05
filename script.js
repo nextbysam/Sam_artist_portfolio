@@ -287,23 +287,30 @@ function getSpritePosition(index) {
 }
 
 function spawnTrailImage(x, y) {
+    if (!spriteSheetLoaded) return;
+
     const img = getPooledElement();
     
+    const spriteIndex = Math.floor(Math.random() * totalSprites);
+    const pos = getSpritePosition(spriteIndex);
+    
+    const scale = SPRITE_CONFIG.displaySize / SPRITE_CONFIG.spriteSize;
+    const sheetDisplayWidth = SPRITE_CONFIG.spriteSize * SPRITE_CONFIG.cols * scale;
+    const sheetDisplayHeight = SPRITE_CONFIG.spriteSize * SPRITE_CONFIG.rows * scale;
+    
     img.style.cssText = `
-        left: ${x - IMAGE_SIZE/2}px;
-        top: ${y - IMAGE_SIZE/2}px;
-        width: ${IMAGE_SIZE}px;
-        height: ${IMAGE_SIZE}px;
+        left: ${x - SPRITE_CONFIG.displaySize/2}px;
+        top: ${y - SPRITE_CONFIG.displaySize/2}px;
+        width: ${SPRITE_CONFIG.displaySize}px;
+        height: ${SPRITE_CONFIG.displaySize}px;
         opacity: 0.9;
         transform: scale(1) rotate(0deg);
         display: block;
+        background-image: url(${SPRITE_CONFIG.url});
+        background-size: ${sheetDisplayWidth}px ${sheetDisplayHeight}px;
+        background-position: -${pos.x * scale}px -${pos.y * scale}px;
+        background-repeat: no-repeat;
     `;
-    
-    const randomImage = TRAIL_IMAGES[Math.floor(Math.random() * TRAIL_IMAGES.length)];
-    img.style.backgroundImage = `url(${randomImage})`;
-    img.style.backgroundSize = 'contain';
-    img.style.backgroundRepeat = 'no-repeat';
-    img.style.backgroundPosition = 'center';
     
     if (!img.parentElement) {
         document.body.appendChild(img);
@@ -334,7 +341,17 @@ function initCursorImageTrail() {
     const container = document.querySelector('.container');
     const BUFFER_ZONE = IMAGE_SIZE + 80; // Image size + margin to prevent overlap with word and tooltip
     
+    let preloadStarted = false;
+    
     document.addEventListener('mousemove', (e) => {
+        // Lazy load sprite sheet on first mouse movement
+        if (!preloadStarted) {
+            preloadSpriteSheet();
+            preloadStarted = true;
+        }
+        
+        // Don't spawn images until sprite sheet is loaded
+        if (!spriteSheetLoaded) return;
         // Only spawn images in the siderails (margins on left/right of content)
         if (!container) return;
         
