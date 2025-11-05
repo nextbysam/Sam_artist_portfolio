@@ -209,7 +209,7 @@ function injectGlitchAnimation() {
     document.head.appendChild(style);
 }
 
-// Cursor Image Trail Effect - Improved with Element Pooling
+// Cursor Image Trail Effect - Optimized with Sprite Sheet
 let lastSpawnTime = 0;
 let mousePos = { x: 0, y: 0, lastX: 0, lastY: 0 };
 const SPAWN_INTERVAL = 70;
@@ -218,28 +218,20 @@ const MAX_POOL_SIZE = 50;
 const imagePool = [];
 const activeImages = new Set();
 
-const TRAIL_IMAGES = [
-    'images/05A58CEC-CF53-4070-AEFB-D157DEF9510A_1_105_c.jpeg',
-    'images/06A18401-2AF6-4711-A781-F7614C7FA776_1_105_c.jpeg',
-    'images/0D7A0269-FBC6-4264-B26D-EAF71CD15477_1_105_c.jpeg',
-    'images/16ADCE47-8EDD-4A67-895F-233BC099CEBC_1_105_c.jpeg',
-    'images/2CA1CC52-09ED-42DB-8D19-3FF8E1062CB1_1_105_c.jpeg',
-    'images/30F88B0A-9F23-4EAB-89C2-4B8A97A090FB_1_105_c.jpeg',
-    'images/3CD8BAE1-0320-41EF-830C-CD042D3F7001_4_5005_c.jpeg',
-    'images/3FD3A4BE-900B-4C07-8625-3257929B7321_1_105_c.jpeg',
-    'images/7519194D-7F30-40B9-8C72-A57E82F5FAFF_1_105_c.jpeg',
-    'images/7FC1BA15-6F09-4F6F-B3C4-681B061F6FD4_1_105_c.jpeg',
-    'images/8DF8A331-A7C4-4FDD-83BF-0AB56FD48AE6_4_5005_c.jpeg',
-    'images/97DCE991-5453-4CA5-A3AF-71DCCC2829DD_4_5005_c.jpeg',
-    'images/9AF02E33-4816-4E51-9454-DEF34E694753_1_105_c.jpeg',
-    'images/A12B156C-B37E-40CD-9BF5-79B9B8DC62A1_1_105_c.jpeg',
-    'images/B3A460F8-F6E7-4476-83B4-10294EC0FFF7_4_5005_c.jpeg',
-    'images/B6475C10-5D3F-4549-8549-DAEA4379BB96_4_5005_c.jpeg',
-    'images/CB3DEE66-064B-4740-BCA2-BAD5A7CA8161_1_105_c.jpeg',
-    'images/D22C44C7-1262-4582-8478-7326F1F29524_1_105_c.jpeg',
-    'images/EF2F26CD-2321-4E72-AA34-65C82CCF4AC4_1_105_c.jpeg',
-    'images/F9ABCE9D-3310-42DE-91E7-2762744D49F0_1_105_c.jpeg'
-];
+// Sprite sheet configuration
+let spriteSheet = null;
+let spriteSheetLoaded = false;
+
+const SPRITE_CONFIG = {
+    url: 'images/sprite-sheet.webp',
+    fallback: 'images/sprite-sheet.png',
+    cols: 5,
+    rows: 4,
+    spriteSize: 180,
+    displaySize: 180,
+};
+
+const totalSprites = SPRITE_CONFIG.cols * SPRITE_CONFIG.rows;
 
 function getPooledElement() {
     if (imagePool.length > 0) {
@@ -258,6 +250,40 @@ function returnToPool(element) {
     } else {
         element.remove();
     }
+}
+
+function preloadSpriteSheet() {
+    if (spriteSheet) return Promise.resolve(spriteSheet);
+
+    const perfStart = performance.now();
+
+    return new Promise((resolve) => {
+        const img = new Image();
+
+        img.onload = () => {
+            spriteSheet = img;
+            spriteSheetLoaded = true;
+            const loadTime = performance.now() - perfStart;
+            console.log(`✓ Sprite sheet loaded in ${loadTime.toFixed(2)}ms`);
+            resolve(img);
+        };
+
+        img.onerror = () => {
+            console.warn('⚠ WebP failed, trying PNG fallback...');
+            img.src = SPRITE_CONFIG.fallback;
+        };
+
+        img.src = SPRITE_CONFIG.url;
+    });
+}
+
+function getSpritePosition(index) {
+    const col = index % SPRITE_CONFIG.cols;
+    const row = Math.floor(index / SPRITE_CONFIG.cols);
+    return {
+        x: col * SPRITE_CONFIG.spriteSize,
+        y: row * SPRITE_CONFIG.spriteSize,
+    };
 }
 
 function spawnTrailImage(x, y) {
