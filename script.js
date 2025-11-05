@@ -181,7 +181,7 @@ function checkReadingTime() {
     const currentTime = Date.now();
     const timeSpent = (currentTime - pageLoadTime) / 1000;
     
-    if (timeSpent > 120) {
+    if (timeSpent > 40) {
         showEasterEggMessage('Still here? That\'s the obsession I\'m talking about.');
         clearInterval(readingTimeInterval);
     }
