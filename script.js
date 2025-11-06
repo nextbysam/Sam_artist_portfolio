@@ -225,8 +225,8 @@ let spriteSheetLoaded = false;
 const SPRITE_CONFIG = {
     url: 'images/sprite-sheet.webp',
     fallback: 'images/sprite-sheet.png',
-    cols: 5,
-    rows: 4,
+    cols: 12,  // Auto-calculated: adjust after running update-images.js
+    rows: 12,  // Auto-calculated: adjust after running update-images.js
     spriteSize: 180,
     displaySize: 180,
 };

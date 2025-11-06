@@ -20,15 +20,30 @@ function checkImageMagick() {
 
 // Get all image files from directory
 function getImageFiles() {
-    const files = fs.readdirSync(imagesDir)
+    const allFiles = fs.readdirSync(imagesDir);
+    const supportedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    
+    const imageFiles = allFiles
         .filter(file => {
             const ext = path.extname(file).toLowerCase();
-            return ['.jpg', '.jpeg', '.png'].includes(ext);
+            return supportedExtensions.includes(ext);
         })
         .filter(file => !file.startsWith('sprite-sheet')) // Exclude existing sprite sheets
         .sort();
     
-    return files.map(file => path.join(imagesDir, file));
+    // Log breakdown by type
+    const breakdown = imageFiles.reduce((acc, file) => {
+        const ext = path.extname(file).toLowerCase();
+        acc[ext] = (acc[ext] || 0) + 1;
+        return acc;
+    }, {});
+    
+    console.log('📋 Image types found:');
+    Object.entries(breakdown).forEach(([ext, count]) => {
+        console.log(`   ${ext}: ${count} file${count !== 1 ? 's' : ''}`);
+    });
+    
+    return imageFiles.map(file => path.join(imagesDir, file));
 }
 
 // Generate sprite sheet using ImageMagick
@@ -51,17 +66,17 @@ function generateSpriteSheet() {
 
     console.log(`📁 Found ${imageFiles.length} images`);
     
-    // Configuration
-    const cols = 5;
-    const rows = 4;
+    // Configuration - dynamically calculate grid size
     const spriteSize = 180;
+    const totalImages = imageFiles.length;
+    
+    // Calculate optimal grid dimensions (try to keep it roughly square)
+    const cols = Math.ceil(Math.sqrt(totalImages));
+    const rows = Math.ceil(totalImages / cols);
     const totalSlots = cols * rows;
-
-    if (imageFiles.length > totalSlots) {
-        console.warn(`⚠️  Warning: Found ${imageFiles.length} images but sprite sheet only supports ${totalSlots}`);
-        console.warn(`    Using first ${totalSlots} images\n`);
-        imageFiles.splice(totalSlots);
-    }
+    
+    console.log(`\n📐 Grid layout: ${cols} columns × ${rows} rows = ${totalSlots} slots`);
+    console.log(`   Using all ${totalImages} images`);
 
     const outputPng = path.join(imagesDir, 'sprite-sheet.png');
     const outputWebp = path.join(imagesDir, 'sprite-sheet.webp');
@@ -98,7 +113,10 @@ function generateSpriteSheet() {
         console.log(`   PNG:  ${pngSize} KB`);
         console.log(`   WebP: ${webpSize} KB (${savings}% smaller)`);
         console.log(`\n✨ Sprite sheet generated successfully!`);
-        console.log(`   Location: ${imagesDir}/sprite-sheet.{png,webp}\n`);
+        console.log(`   Location: ${imagesDir}/sprite-sheet.{png,webp}`);
+        console.log(`\n⚙️  Update script.js with these values:`);
+        console.log(`   cols: ${cols},`);
+        console.log(`   rows: ${rows},\n`);
 
     } catch (error) {
         console.error('❌ Failed to generate sprite sheet');
