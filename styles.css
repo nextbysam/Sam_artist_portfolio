@@ -155,23 +155,35 @@ body.dark-mode .hero-quote {
 .think-different {
     font-style: italic;
     line-height: 1.8;
+    text-align: center;
+    padding: 40px 20px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+body.dark-mode .think-different {
+    background-color: rgba(255, 255, 255, 0.02);
 }
 
 .think-line {
     margin-bottom: 4px;
-    opacity: 0.95;
+    opacity: 0.85;
+    font-size: 13px;
 }
 
 .think-paragraph {
     margin-top: 20px;
     margin-bottom: 12px;
     font-style: normal;
+    opacity: 0.9;
 }
 
 .think-final {
     margin-top: 24px;
     font-weight: 600;
     font-style: normal;
+    opacity: 1;
 }
 
 .emphasis-word {
