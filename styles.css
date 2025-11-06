@@ -154,36 +154,51 @@ body.dark-mode .hero-quote {
 /* Think Different Section */
 .think-different {
     font-style: italic;
-    line-height: 1.8;
-    text-align: center;
-    padding: 40px 20px;
+    line-height: 1.9;
+    text-align: left;
+    padding: 40px;
     background-color: rgba(0, 0, 0, 0.02);
     border-radius: 8px;
     margin: 20px 0;
+    color: var(--accent-color);
 }
 
 body.dark-mode .think-different {
     background-color: rgba(255, 255, 255, 0.02);
 }
 
-.think-line {
-    margin-bottom: 4px;
-    opacity: 0.85;
-    font-size: 13px;
+.think-different p {
+    margin-bottom: 8px;
 }
 
+.think-line {
+    margin-bottom: 8px;
+}
+
+.think-line:nth-child(1) { padding-left: 0; }
+.think-line:nth-child(2) { padding-left: 0; }
+.think-line:nth-child(3) { padding-left: 40px; }
+.think-line:nth-child(4) { padding-left: 80px; }
+.think-line:nth-child(5) { padding-left: 120px; }
+.think-line:nth-child(6) { padding-left: 0; }
+.think-line:nth-child(7) { padding-left: 0; }
+.think-line:nth-child(8) { padding-left: 0; }
+.think-line:nth-child(12) { padding-left: 0; }
+.think-line:nth-child(13) { padding-left: 0; }
+.think-line:nth-child(14) { padding-left: 0; }
+
 .think-paragraph {
-    margin-top: 20px;
-    margin-bottom: 12px;
+    margin-top: 16px;
+    margin-bottom: 8px;
     font-style: normal;
-    opacity: 0.9;
+    padding-left: 0;
 }
 
 .think-final {
-    margin-top: 24px;
-    font-weight: 600;
+    margin-top: 20px;
+    font-weight: 400;
     font-style: normal;
-    opacity: 1;
+    padding-left: 0;
 }
 
 .emphasis-word {
