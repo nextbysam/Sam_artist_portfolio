@@ -18,18 +18,33 @@ function checkImageMagick() {
     }
 }
 
-// Get all image files from directory
+// Get all image files from sources directory only
 function getImageFiles() {
-    const allFiles = fs.readdirSync(imagesDir);
     const supportedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    const imageFiles = [];
     
-    const imageFiles = allFiles
-        .filter(file => {
+    // Scan sources subdirectory (all source images live here, gitignored)
+    const sourcesDir = path.join(imagesDir, 'sources');
+    
+    if (!fs.existsSync(sourcesDir)) {
+        console.error('❌ sources directory not found!');
+        process.exit(1);
+    }
+    
+    const sourceFiles = fs.readdirSync(sourcesDir);
+    sourceFiles.forEach(file => {
+        const filePath = path.join(sourcesDir, file);
+        const stat = fs.statSync(filePath);
+        
+        if (stat.isFile()) {
             const ext = path.extname(file).toLowerCase();
-            return supportedExtensions.includes(ext);
-        })
-        .filter(file => !file.startsWith('sprite-sheet')) // Exclude existing sprite sheets
-        .sort();
+            if (supportedExtensions.includes(ext)) {
+                imageFiles.push(filePath);
+            }
+        }
+    });
+    
+    imageFiles.sort();
     
     // Log breakdown by type
     const breakdown = imageFiles.reduce((acc, file) => {
@@ -43,7 +58,7 @@ function getImageFiles() {
         console.log(`   ${ext}: ${count} file${count !== 1 ? 's' : ''}`);
     });
     
-    return imageFiles.map(file => path.join(imagesDir, file));
+    return imageFiles;
 }
 
 // Generate sprite sheet using ImageMagick
