@@ -57,17 +57,24 @@ h3 {
     color: var(--accent-color);
 }
 
-/* Apple-style Hero Quote */
+/* Apple Notes-style Hero Quote */
 .hero-quote {
-    text-align: center;
-    font-size: 18px;
-    line-height: 1.5;
-    font-weight: 300;
-    letter-spacing: 0.01em;
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: -0.01em;
     color: var(--text-color);
     margin: 40px 0;
-    padding: 0 20px;
+    padding: 16px 20px;
     font-style: normal;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-left: 3px solid var(--accent-color);
+    border-radius: 4px;
+    text-align: left;
+}
+
+body.dark-mode .hero-quote {
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .intro {
