@@ -1,1 +1,15 @@
 .env
+
+# Image sources (only sprite sheets are needed)
+images/sources/
+images/archive/
+images/backup/
+images/*.jpg
+images/*.JPG
+images/*.jpeg
+images/*.png
+images/*.gif
+
+# Keep sprite sheets
+!images/sprite-sheet.png
+!images/sprite-sheet.webp
