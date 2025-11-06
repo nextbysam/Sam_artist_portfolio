@@ -339,7 +339,8 @@ function initCursorImageTrail() {
     }
     
     const container = document.querySelector('.container');
-    const BUFFER_ZONE = IMAGE_SIZE + 80; // Image size + margin to prevent overlap with word and tooltip
+    const BUFFER_ZONE = IMAGE_SIZE + 120; // Increased buffer: image size + extra margin for safety
+    const CONTAINER_MARGIN = 100; // Additional margin around container to keep images away from text
     
     let preloadStarted = false;
     
@@ -356,12 +357,26 @@ function initCursorImageTrail() {
         if (!container) return;
         
         const containerRect = container.getBoundingClientRect();
+        
+        // Add extra margin buffer around container to keep images away from text
         const isInSiderails = (
-            e.clientX < containerRect.left || 
-            e.clientX > containerRect.right
+            e.clientX < containerRect.left - CONTAINER_MARGIN || 
+            e.clientX > containerRect.right + CONTAINER_MARGIN
         );
         
         if (!isInSiderails) return;
+        
+        // Also block spawning in vertical proximity to container (top/bottom margins)
+        const isVerticallyNearContainer = (
+            e.clientY >= containerRect.top - CONTAINER_MARGIN &&
+            e.clientY <= containerRect.bottom + CONTAINER_MARGIN
+        );
+        
+        if (isVerticallyNearContainer && 
+            e.clientX >= containerRect.left - CONTAINER_MARGIN && 
+            e.clientX <= containerRect.right + CONTAINER_MARGIN) {
+            return;
+        }
         
         // Disable spawning near tooltip terms with buffer zone
         const termElements = document.querySelectorAll('.term');
