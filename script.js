@@ -223,10 +223,10 @@ let spriteSheet = null;
 let spriteSheetLoaded = false;
 
 const SPRITE_CONFIG = {
-    url: 'images/sprite-sheet.webp',
-    fallback: 'images/sprite-sheet.png',
-    cols: 12,  // Auto-calculated: adjust after running update-images.js
-    rows: 12,  // Auto-calculated: adjust after running update-images.js
+    url: 'images/sprite-sheet.webp?v=2',  // Cache version - increment when regenerating
+    fallback: 'images/sprite-sheet.png?v=2',
+    cols: 6,   // Updated: 6x6 grid for 35 images
+    rows: 6,   // Updated: 6x6 grid for 35 images
     spriteSize: 180,
     displaySize: 180,
 };
