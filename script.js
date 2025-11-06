@@ -406,25 +406,30 @@ function initCursorImageTrail() {
 function initTooltipPositioning() {
     const terms = document.querySelectorAll('.term');
     
+    // Tooltip dimensions from CSS
+    const TOOLTIP_HEIGHT = 200; // Estimated max height including padding
+    const TOOLTIP_MARGIN = 12; // Gap between term and tooltip (from CSS: calc(100% + 12px))
+    const ARROW_HEIGHT = 8; // Arrow height (from CSS border: 8px)
+    const SAFE_BUFFER = 20; // Additional buffer from top of viewport
+    
     terms.forEach(term => {
-        term.addEventListener('mouseenter', function() {
-            // Use a small delay to let CSS positioning happen first
-            setTimeout(() => {
-                const termRect = this.getBoundingClientRect();
-                
-                // Add class to control positioning
+        term.addEventListener('mouseenter', function(e) {
+            // Calculate immediately and deterministically
+            const termRect = this.getBoundingClientRect();
+            
+            // Calculate total space needed above the term
+            const spaceNeededAbove = TOOLTIP_HEIGHT + TOOLTIP_MARGIN + ARROW_HEIGHT + SAFE_BUFFER;
+            
+            // Mathematical decision: if not enough space above, show below
+            if (termRect.top < spaceNeededAbove) {
+                this.classList.add('tooltip-below');
+            } else {
                 this.classList.remove('tooltip-below');
-                
-                // Check if tooltip would overflow top
-                // Rough estimate: tooltip is ~150-200px tall
-                const estimatedTooltipHeight = 200;
-                if (termRect.top < estimatedTooltipHeight) {
-                    this.classList.add('tooltip-below');
-                }
-            }, 10);
+            }
         });
         
         term.addEventListener('mouseleave', function() {
+            // Clean up class on leave
             this.classList.remove('tooltip-below');
         });
     });
