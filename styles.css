@@ -151,6 +151,29 @@ body.dark-mode .hero-quote {
     margin-bottom: 16px;
 }
 
+/* Think Different Section */
+.think-different {
+    font-style: italic;
+    line-height: 1.8;
+}
+
+.think-line {
+    margin-bottom: 4px;
+    opacity: 0.95;
+}
+
+.think-paragraph {
+    margin-top: 20px;
+    margin-bottom: 12px;
+    font-style: normal;
+}
+
+.think-final {
+    margin-top: 24px;
+    font-weight: 600;
+    font-style: normal;
+}
+
 .emphasis-word {
     position: relative;
     transition: font-weight 0.3s ease, opacity 0.3s ease;
