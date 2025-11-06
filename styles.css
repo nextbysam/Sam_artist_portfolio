@@ -154,51 +154,86 @@ body.dark-mode .hero-quote {
 /* Think Different Section */
 .think-different {
     font-style: italic;
-    line-height: 1.9;
+    line-height: 2.2;
     text-align: left;
-    padding: 40px;
-    background-color: rgba(0, 0, 0, 0.02);
-    border-radius: 8px;
-    margin: 20px 0;
-    color: var(--accent-color);
+    padding: 60px 50px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.02) 100%);
+    border-radius: 12px;
+    margin: 30px 0;
+    color: var(--text-color);
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    border-left: 4px solid var(--accent-color);
 }
 
 body.dark-mode .think-different {
-    background-color: rgba(255, 255, 255, 0.02);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%);
 }
 
 .think-different p {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    opacity: 0.88;
 }
 
 .think-line {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    transition: opacity 0.3s ease;
 }
 
-.think-line:nth-child(1) { padding-left: 0; }
+.think-line:hover {
+    opacity: 1;
+}
+
+.think-line:nth-child(1) { 
+    padding-left: 0; 
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 1;
+}
 .think-line:nth-child(2) { padding-left: 0; }
-.think-line:nth-child(3) { padding-left: 40px; }
-.think-line:nth-child(4) { padding-left: 80px; }
-.think-line:nth-child(5) { padding-left: 120px; }
-.think-line:nth-child(6) { padding-left: 0; }
+.think-line:nth-child(3) { padding-left: 50px; }
+.think-line:nth-child(4) { padding-left: 100px; }
+.think-line:nth-child(5) { padding-left: 150px; }
+.think-line:nth-child(6) { padding-left: 0; margin-top: 8px; }
 .think-line:nth-child(7) { padding-left: 0; }
 .think-line:nth-child(8) { padding-left: 0; }
-.think-line:nth-child(12) { padding-left: 0; }
+.think-line:nth-child(12) { padding-left: 0; margin-top: 8px; }
 .think-line:nth-child(13) { padding-left: 0; }
 .think-line:nth-child(14) { padding-left: 0; }
 
 .think-paragraph {
-    margin-top: 16px;
-    margin-bottom: 8px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     font-style: normal;
     padding-left: 0;
+    opacity: 0.9;
 }
 
 .think-final {
-    margin-top: 20px;
-    font-weight: 400;
+    margin-top: 32px;
+    font-weight: 600;
     font-style: normal;
     padding-left: 0;
+    font-size: 15px;
+    opacity: 1;
+    color: var(--text-color);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 24px;
+}
+
+body.dark-mode .think-final {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+    .think-different {
+        padding: 40px 30px;
+        font-size: 14px;
+    }
+    
+    .think-line:nth-child(3) { padding-left: 30px; }
+    .think-line:nth-child(4) { padding-left: 60px; }
+    .think-line:nth-child(5) { padding-left: 90px; }
 }
 
 .emphasis-word {
