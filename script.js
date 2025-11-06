@@ -181,7 +181,7 @@ function checkReadingTime() {
     const currentTime = Date.now();
     const timeSpent = (currentTime - pageLoadTime) / 1000;
     
-    if (timeSpent > 40) {
+    if (timeSpent > 20) {
         showEasterEggMessage('Still here? That\'s the obsession I\'m talking about.');
         clearInterval(readingTimeInterval);
     }
@@ -190,7 +190,7 @@ function checkReadingTime() {
 let readingTimeInterval;
 
 function initReadingTimeReward() {
-    readingTimeInterval = setInterval(checkReadingTime, 30000);
+    readingTimeInterval = setInterval(checkReadingTime, 5000);
 }
 
 // Add glitch animation CSS
