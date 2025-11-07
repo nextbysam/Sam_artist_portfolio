@@ -384,6 +384,59 @@ body.dark-mode .think-final {
     letter-spacing: -0.01em;
 }
 
+/* Work History Section */
+.work-entry {
+    margin-bottom: 28px;
+}
+
+.work-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.work-company {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.work-role-separator {
+    color: var(--accent-color);
+    font-weight: 400;
+}
+
+.work-role {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--accent-color);
+}
+
+.work-date {
+    display: block;
+    font-size: 12px;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+}
+
+.work-description {
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    opacity: 0.92;
+    margin: 0;
+}
+
+.work-divider {
+    margin: 24px 0;
+    color: var(--accent-color);
+    text-align: left;
+}
+
 .project {
     margin-bottom: 32px;
     padding-bottom: 32px;
@@ -509,6 +562,21 @@ footer {
 
     .now-primary p {
         font-size: 14px;
+    }
+
+    /* Work History Mobile */
+    .work-header {
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-start;
+    }
+
+    .work-role-separator {
+        display: none;
+    }
+
+    .work-divider {
+        margin: 20px 0;
     }
 }
 
