@@ -423,10 +423,10 @@ function initTooltipPositioning() {
     const terms = document.querySelectorAll('.term');
     
     // Tooltip dimensions from CSS
-    const TOOLTIP_HEIGHT = 200; // Estimated max height including padding
+    const TOOLTIP_HEIGHT = 350; // Increased for longer definitions (was 200)
     const TOOLTIP_MARGIN = 12; // Gap between term and tooltip (from CSS: calc(100% + 12px))
     const ARROW_HEIGHT = 8; // Arrow height (from CSS border: 8px)
-    const SAFE_BUFFER = 20; // Additional buffer from top of viewport
+    const SAFE_BUFFER = 30; // Additional buffer from top of viewport (increased from 20)
     
     terms.forEach(term => {
         term.addEventListener('mouseenter', function(e) {
