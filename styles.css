@@ -136,7 +136,7 @@ body.dark-mode .hero-quote {
 
 .section-content {
     max-height: 2000px;
-    overflow: hidden;
+    overflow: visible;
     transition: max-height 0.5s ease, opacity var(--transition-speed) ease;
     margin-top: 20px;
 }
@@ -145,6 +145,7 @@ body.dark-mode .hero-quote {
     max-height: 0;
     opacity: 0;
     margin-top: 0;
+    overflow: hidden;
 }
 
 /* Philosophy Section - Simple Style */
