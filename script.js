@@ -223,15 +223,16 @@ let spriteSheet = null;
 let spriteSheetLoaded = false;
 
 const SPRITE_CONFIG = {
-    url: 'images/sprite-sheet.webp?v=4',  // Cache version - increment when regenerating
-    fallback: 'images/sprite-sheet.png?v=4',
-    cols: 11,   // Updated: 11x11 grid for 115 images
-    rows: 11,   // Updated: 11x11 grid for 115 images
+    url: 'images/sprite-sheet.webp?v=6',  // Cache version - increment when regenerating
+    fallback: 'images/sprite-sheet.png?v=6',
+    cols: 8,    // 8x7 grid
+    rows: 7,    // 8x7 grid
     spriteSize: 180,
     displaySize: 180,
+    totalImages: 50,  // Actual number of images in sprite sheet (not all grid slots are filled)
 };
 
-const totalSprites = SPRITE_CONFIG.cols * SPRITE_CONFIG.rows;
+const totalSprites = SPRITE_CONFIG.totalImages;
 
 function getPooledElement() {
     if (imagePool.length > 0) {
@@ -417,17 +418,32 @@ function initCursorImageTrail() {
     });
 }
 
-// Dynamic Tooltip Positioning
+// Dynamic Tooltip Positioning and HTML Tooltip Support
 function initTooltipPositioning() {
     const terms = document.querySelectorAll('.term');
     
     // Tooltip dimensions from CSS
-    const TOOLTIP_HEIGHT = 200; // Estimated max height including padding
+    const TOOLTIP_HEIGHT = 350; // Increased for longer definitions (was 200)
     const TOOLTIP_MARGIN = 12; // Gap between term and tooltip (from CSS: calc(100% + 12px))
     const ARROW_HEIGHT = 8; // Arrow height (from CSS border: 8px)
-    const SAFE_BUFFER = 20; // Additional buffer from top of viewport
+    const SAFE_BUFFER = 30; // Additional buffer from top of viewport (increased from 20)
     
     terms.forEach(term => {
+        // Support HTML tooltips via data-definition-html attribute
+        const htmlContent = term.getAttribute('data-definition-html');
+        if (htmlContent) {
+            // Create a tooltip element for HTML content
+            const tooltip = document.createElement('div');
+            tooltip.className = 'term-tooltip';
+            tooltip.innerHTML = htmlContent;
+            term.appendChild(tooltip);
+            
+            // Also create arrow
+            const arrow = document.createElement('div');
+            arrow.className = 'term-tooltip-arrow';
+            term.appendChild(arrow);
+        }
+        
         term.addEventListener('mouseenter', function(e) {
             // Calculate immediately and deterministically
             const termRect = this.getBoundingClientRect();

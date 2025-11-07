@@ -136,7 +136,7 @@ body.dark-mode .hero-quote {
 
 .section-content {
     max-height: 2000px;
-    overflow: hidden;
+    overflow: visible;
     transition: max-height 0.5s ease, opacity var(--transition-speed) ease;
     margin-top: 20px;
 }
@@ -145,6 +145,7 @@ body.dark-mode .hero-quote {
     max-height: 0;
     opacity: 0;
     margin-top: 0;
+    overflow: hidden;
 }
 
 /* Philosophy Section - Simple Style */
@@ -376,6 +377,66 @@ body.dark-mode .think-final {
     margin-bottom: 8px;
 }
 
+/* Now Section - Primary Entry Emphasis */
+.now-primary p {
+    font-size: 15px;
+    line-height: 1.8;
+    letter-spacing: -0.01em;
+}
+
+/* Work History Section */
+.work-entry {
+    margin-bottom: 28px;
+}
+
+.work-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.work-company {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--text-color);
+}
+
+.work-role-separator {
+    color: var(--accent-color);
+    font-weight: 400;
+}
+
+.work-role {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--accent-color);
+}
+
+.work-date {
+    display: block;
+    font-size: 12px;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+}
+
+.work-description {
+    font-size: 14px;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    opacity: 0.92;
+    margin: 0;
+}
+
+.work-divider {
+    margin: 24px 0;
+    color: var(--accent-color);
+    text-align: left;
+}
+
 .project {
     margin-bottom: 32px;
     padding-bottom: 32px;
@@ -498,6 +559,25 @@ footer {
     .divider {
         margin: 20px 0;
     }
+
+    .now-primary p {
+        font-size: 14px;
+    }
+
+    /* Work History Mobile */
+    .work-header {
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-start;
+    }
+
+    .work-role-separator {
+        display: none;
+    }
+
+    .work-divider {
+        margin: 20px 0;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -527,7 +607,92 @@ footer {
     text-decoration-color: var(--accent-color);
 }
 
-.term::after {
+/* HTML Tooltip (via JavaScript) */
+.term-tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 12px);
+    transform: translateX(-50%);
+    
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+    min-width: 350px;
+    max-width: 550px;
+    text-align: left;
+    white-space: normal;
+    text-decoration: none;
+    
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.term-tooltip strong {
+    font-weight: 700;
+    color: white;
+}
+
+.term-tooltip-arrow {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 4px);
+    transform: translateX(-50%);
+    
+    border: 8px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.95);
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 1000;
+}
+
+.term:hover .term-tooltip,
+.term:hover .term-tooltip-arrow {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Tooltip below variant */
+.term.tooltip-below .term-tooltip {
+    bottom: auto;
+    top: calc(100% + 12px);
+}
+
+.term.tooltip-below .term-tooltip-arrow {
+    bottom: auto;
+    top: calc(100% + 4px);
+    border-top-color: transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.95);
+}
+
+body.dark-mode .term-tooltip {
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #1a1a1a;
+}
+
+body.dark-mode .term-tooltip strong {
+    color: #1a1a1a;
+}
+
+body.dark-mode .term-tooltip-arrow {
+    border-top-color: rgba(255, 255, 255, 0.95);
+}
+
+body.dark-mode .term.tooltip-below .term-tooltip-arrow {
+    border-top-color: transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Only show CSS-based tooltips for terms without HTML tooltips */
+.term:not([data-definition-html])::after {
     content: attr(data-definition);
     position: absolute;
     left: 50%;
@@ -554,7 +719,7 @@ footer {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.term::before {
+.term:not([data-definition-html])::before {
     content: "";
     position: absolute;
     left: 50%;
@@ -571,46 +736,58 @@ footer {
 }
 
 /* Show tooltip below when it would overflow top */
-.term.tooltip-below::after {
+.term.tooltip-below:not([data-definition-html])::after {
     bottom: auto;
     top: calc(100% + 12px);
 }
 
-.term.tooltip-below::before {
+.term.tooltip-below:not([data-definition-html])::before {
     bottom: auto;
     top: calc(100% + 4px);
     border-top-color: transparent;
     border-bottom-color: rgba(0, 0, 0, 0.95);
 }
 
-.term:hover::after,
-.term:hover::before {
+.term:not([data-definition-html]):hover::after,
+.term:not([data-definition-html]):hover::before {
     opacity: 1;
     visibility: visible;
 }
 
-body.dark-mode .term::after {
+body.dark-mode .term:not([data-definition-html])::after {
     background-color: rgba(255, 255, 255, 0.95);
     color: #1a1a1a;
 }
 
-body.dark-mode .term::before {
+body.dark-mode .term:not([data-definition-html])::before {
     border-top-color: rgba(255, 255, 255, 0.95);
 }
 
-body.dark-mode .term.tooltip-below::before {
+body.dark-mode .term.tooltip-below:not([data-definition-html])::before {
     border-top-color: transparent;
     border-bottom-color: rgba(255, 255, 255, 0.95);
 }
 
 @media (max-width: 768px) {
-    .term::after {
+    .term:not([data-definition-html])::after {
         left: 10px;
         transform: translateX(0);
         max-width: calc(100vw - 40px);
     }
     
-    .term::before {
+    .term:not([data-definition-html])::before {
+        left: 30px;
+        transform: translateX(0);
+    }
+
+    .term-tooltip {
+        left: 10px;
+        transform: translateX(0);
+        max-width: calc(100vw - 40px);
+        min-width: unset;
+    }
+    
+    .term-tooltip-arrow {
         left: 30px;
         transform: translateX(0);
     }
