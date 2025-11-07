@@ -223,15 +223,16 @@ let spriteSheet = null;
 let spriteSheetLoaded = false;
 
 const SPRITE_CONFIG = {
-    url: 'images/sprite-sheet.webp?v=4',  // Cache version - increment when regenerating
-    fallback: 'images/sprite-sheet.png?v=4',
-    cols: 11,   // Updated: 11x11 grid for 115 images
-    rows: 11,   // Updated: 11x11 grid for 115 images
+    url: 'images/sprite-sheet.webp?v=6',  // Cache version - increment when regenerating
+    fallback: 'images/sprite-sheet.png?v=6',
+    cols: 8,    // 8x7 grid
+    rows: 7,    // 8x7 grid
     spriteSize: 180,
     displaySize: 180,
+    totalImages: 50,  // Actual number of images in sprite sheet (not all grid slots are filled)
 };
 
-const totalSprites = SPRITE_CONFIG.cols * SPRITE_CONFIG.rows;
+const totalSprites = SPRITE_CONFIG.totalImages;
 
 function getPooledElement() {
     if (imagePool.length > 0) {
