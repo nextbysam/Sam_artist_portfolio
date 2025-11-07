@@ -418,7 +418,7 @@ function initCursorImageTrail() {
     });
 }
 
-// Dynamic Tooltip Positioning
+// Dynamic Tooltip Positioning and HTML Tooltip Support
 function initTooltipPositioning() {
     const terms = document.querySelectorAll('.term');
     
@@ -429,6 +429,21 @@ function initTooltipPositioning() {
     const SAFE_BUFFER = 30; // Additional buffer from top of viewport (increased from 20)
     
     terms.forEach(term => {
+        // Support HTML tooltips via data-definition-html attribute
+        const htmlContent = term.getAttribute('data-definition-html');
+        if (htmlContent) {
+            // Create a tooltip element for HTML content
+            const tooltip = document.createElement('div');
+            tooltip.className = 'term-tooltip';
+            tooltip.innerHTML = htmlContent;
+            term.appendChild(tooltip);
+            
+            // Also create arrow
+            const arrow = document.createElement('div');
+            arrow.className = 'term-tooltip-arrow';
+            term.appendChild(arrow);
+        }
+        
         term.addEventListener('mouseenter', function(e) {
             // Calculate immediately and deterministically
             const termRect = this.getBoundingClientRect();
